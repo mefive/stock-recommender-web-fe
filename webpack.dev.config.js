@@ -7,19 +7,19 @@ module.exports = merge(base, {
   // devtool: 'source-map',
   devtool: '#eval-source-map',
   devServer: {
-    port: 1573,
+    port: 9806,
     inline: true,
     colors: true,
     progress: true,
     contentBase: 'dev/',
-    // proxy: {
-    //   '^/api/**': {
-    //     target: 'http://apiproxydomain',
-    //     hostRewrite: 'http://apiproxydomain',
-    //     secure: false,
-    //     changeOrigin: true
-    //   }
-    // }
+    proxy: {
+      '^/api/**': {
+        target: 'http://localhost:7777',
+        hostRewrite: 'http://apiproxydomain',
+        secure: false,
+        changeOrigin: true,
+      }
+    }
   },
   output: {
     filename: '[name].js',
