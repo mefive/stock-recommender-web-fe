@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import ConfigForm from './ConfigForm';
 import Kline from './Kline';
+import Trades from './Trades';
 
 class Backtest extends React.Component {
   canShowResult() {
@@ -36,6 +37,19 @@ class Backtest extends React.Component {
           </div>
         </div>
         )}
+
+        {this.canShowResult() && (
+        <div className="card mt-3">
+          <div className="card-header">
+            交易明细
+          </div>
+
+          <div className="card-block">
+            <Trades />
+          </div>
+        </div>
+        )}
+
       </div>
     );
   }

@@ -22,6 +22,11 @@ function* runBacktest({ payload }) {
         kline: data.kline,
       }
     });
+
+    yield put({
+      type: actionTypes.UPDATE_TRADES,
+      payload: data.trades,
+    });
   }
   catch (e) {
     console.log(e);
