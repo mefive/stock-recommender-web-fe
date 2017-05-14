@@ -1,0 +1,227 @@
+@import "~compass/compass/css3";
+@import "~compass/compass/utilities";
+@import "~styles/theme";
+@import "~styles/mixins/triangle";
+
+.form {
+  .form-group {
+    width: 100%;
+    display: block;
+    padding: 0;
+    margin: 0;
+    line-height: 14px;
+
+    position: relative;
+
+    & > label {
+      float: left;
+      padding: 11px 20px 0 0;
+      text-align: right;
+      color: $text-dark-color;
+
+      .required {
+        color: $error-color;
+        font-size: 16px;
+        margin-right: 10px;
+      }
+
+      &.vertical {
+        display: block;
+        float: none;
+        text-align: left;
+        margin-bottom: 10px;
+      }
+    }
+    
+    + .form-group {
+      margin-top: 22px;
+    }
+
+    &.last {
+      margin-bottom: 0;
+    }
+
+    &.has-error {
+      & > .form-control > input,
+      & > .form-control > textarea {
+        border-color: $error-color !important;
+        box-shadow: 0px 0px 3px 1px rgba(238, 68, 16, 0.5); 
+      }
+    }
+
+    .form-control.has-error {
+      > input,
+      > textarea {
+        border-color: $error-color !important;
+        box-shadow: 0px 0px 3px 1px rgba(238, 68, 16, 0.5); 
+      }
+    }
+
+    .error-tip {
+      position: absolute;
+      bottom: -18px;
+      padding-left: 20px;
+      color: $error-color;
+      font-size: $font-size-sm;
+    }
+
+    .icon-times-circle-o {
+      position: absolute;
+      color: $error-color;
+      font-size: 20px;
+      top: -4px;
+      left: 0;
+    }
+
+    .form-static {
+      line-height: $form-line-height;
+    }
+  }
+
+  &[label-align="left"] {
+    & .form-group > label {
+      text-align: left;
+    }
+  }
+
+  & > .form-header {
+    margin-bottom: 30px;
+
+    label {
+      color: $primary-color;
+      cursor: pointer;
+      @include user-select(none);
+
+      i {
+        margin-right: 20px;
+        vertical-align: middle;
+        font-size: 15px;
+        line-height: $font-size-base;
+      }
+    }
+  }
+
+  .form-control {
+    // input[type="text"],
+    // input[type="password"],
+    // textarea {
+    //   width: 100%;
+    //   outline: none;
+    //   transition-property: border-color;
+    //   transition-duration: .2s;
+
+    //   @include appearance(none);
+
+    //   border: 1px solid $gray-color;
+
+    //   &:focus {
+    //     border-color: $primary-color;
+    //   }
+
+    //   @include border-radius($border-radius-base);
+
+    //   @include input-placeholder {
+    //     color: #b5b5b5;
+    //     font-size: $font-size-sm;
+    //   }
+    // }
+
+    textarea {
+      height: 160px;
+      resize: none;
+    }
+
+    & > input[type="text"],
+    & > input[type="password"] {
+      height: $form-line-height;
+      line-height: $form-line-height;
+    }
+
+    .select {
+      .select-trigger {
+        height: $form-line-height;
+        line-height: 24px;
+        font-size: $font-size-base;
+        background-color: $white-color;
+      }
+
+      .trigger-icon {
+        line-height: 14px;
+        padding: 7px;
+        border-left: none;
+      }
+    }
+
+    .counter {
+      text-align: right;
+    }
+  }
+
+  .form-control-group {
+    &.inline {
+      & > div > .form-group {
+        @include inline-block();
+        width: auto;
+
+        margin-right: 15px;
+      }
+
+      margin-bottom: -15px;
+    }
+  }
+
+  .help-block {
+    padding-top: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #646464;
+  }
+  .form-control-static {
+    padding-top: 8px;
+    margin-bottom: 30px;
+    color: #b5b5b5;
+
+    strong {
+      color: $text-dark-color;
+      margin-right: 14px;
+    }
+  }
+}
+
+.form-actions {
+  margin-top: $form-line-height;
+  text-align: center;
+}
+
+.popover.form-error-popover {
+  padding: 6px 12px;
+  color: $error-color;
+  background-color: #FFFBEE;
+  border-color: #F8D05A;
+  font-size: 12px;
+  @include border-radius(3px);
+
+  i {
+    margin-right: 3px;
+  }
+
+  &:before {
+    @include triangle(bottom, #F8D05A, 0.5em);
+    position: absolute;
+    left: 50%;
+    margin-left: -7px;
+    top: 100%;
+    z-index: 2;
+    margin-top: 1px;
+  }
+
+  &:after {
+    @include triangle(bottom, #FFFBEE, 0.5em);
+    position: absolute;
+    left: 50%;
+    margin-left: -7px;
+    top: 100%;
+    z-index: 3;
+  }
+}

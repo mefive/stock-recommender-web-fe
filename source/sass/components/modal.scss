@@ -1,0 +1,146 @@
+@import "~compass/compass/css3";
+@import "~compass/compass/utilities";
+@import "~styles/theme";
+
+$modal-dialog-header-height: 55px;
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  .modal-mask {
+    background-color: #7B7B7B;
+    background-color: rgba(12, 15, 22, 0.8);
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+  }
+
+  .modal-dialog {
+    position: absolute;
+    background-color: $white-color;
+    min-width: 650px;
+    left: 0;
+    top: 0;
+    opacity: 0;
+
+    @include border-radius($border-radius-base);
+
+    left: 50%;
+    top: 50%;
+
+    .dialog-header {
+      padding-left: 30px;
+
+      h3 {
+        font-size: $font-size-base;
+        color: $secondary-color;
+        vertical-align: middle;
+        line-height: $modal-dialog-header-height;
+      }
+
+      .close {
+        $close-size: 20px;
+
+        float: right;
+        padding: 10px;
+        cursor: pointer;
+        transition: background-color .1s;
+        color: $text-light-color;
+        font-size: $close-size;
+        margin-top: ($modal-dialog-header-height - ($close-size + 20)) / 2;
+        margin-right: 10px;
+      }
+
+      border-bottom: 1px solid $gray-color;
+    }
+
+    .dialog-body {
+      .dialog-content {
+        font-size: 14px;
+        line-height: 1.5;
+
+        padding: 20px 30px;
+        min-height: 120px;
+      }
+
+      .dialog-actions {
+        text-align: center;
+        padding: 15px 0;
+        border-top: 1px solid $gray-color;
+
+        .btn {
+          padding: 10px 0;
+
+          & + .btn {
+            margin-left: 15px;
+          }
+        }
+
+        &[data-action-count="1"] {
+          .btn {
+            width: 520px;
+          }
+        }
+
+        &[data-action-count="2"] {
+          .btn {
+            width: 200px;
+          }
+        }
+      }
+    }
+  }
+
+  &.active {
+    .modal-dialog {
+      opacity: 1;
+    }
+  }
+
+  &.prompt {
+    textarea {
+      @include appearance(none);
+      border: 1px solid $gray-color;
+      @include border-radius(2px);
+      outline: none;
+      width: 100%;
+      resize: none;
+      transition: border-color .2s;
+      margin-top: 20px;
+      
+      &:focus {
+        border-color: $primary-color;
+      }
+
+      padding: 5px;
+    }
+
+    .message {
+      text-align: left;
+    }
+
+    .dialog-actions {
+      text-align: right !important;
+    }
+  }
+
+  &.enter {
+    .modal-dialog {
+      animation-name: scale-in;
+      animation-duration: .2s;
+    }
+  }
+
+  &.leave {
+    .modal-dialog {
+      animation-name: scale-out;
+      animation-duration: .2s;
+    }
+  }
+}

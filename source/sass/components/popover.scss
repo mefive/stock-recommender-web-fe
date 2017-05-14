@@ -1,0 +1,15 @@
+@import "~compass/compass/css3";
+@import "~compass/compass/utilities";
+@import "~styles/theme";
+
+.popover {
+  position: absolute;
+  background-color: $white-color;
+  // border: 1px solid $gray-color;
+  z-index: 2;
+  // @include opacity(0);
+
+  &.placed {
+    @include opacity(1);
+  }
+}

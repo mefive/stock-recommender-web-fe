@@ -1,0 +1,41 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb/base",
+  "plugins": [
+    "import",
+    "react",
+  ],
+  "rules": {
+    "no-debugger": 0,
+    "comma-dangle": 0,
+    "no-console": 0,
+    "no-alert": 0,
+    "no-return-assign": 0,
+    "brace-style": [2, "stroustrup"],
+    "prefer-stateless-function": 0,
+    "no-param-reassign": 0,
+    "class-methods-use-this": 0,
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "path.js"
+      }
+    }
+  },
+  "env": {
+    "browser": true
+  },
+  "globals": {
+    "$": true
+  },
+  "parserOptions": {
+    "ecmaVersion": true,
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  }
+}

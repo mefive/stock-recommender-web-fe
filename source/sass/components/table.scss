@@ -1,0 +1,220 @@
+@import "~compass/compass/css3";
+@import "~compass/compass/utilities";
+@import "~styles/theme";
+
+.table-toolbar {
+  padding: 10px;
+
+  .batch-action,
+  .batch-checkbox {
+    @include inline-block();
+  }
+
+  .batch-checkbox {
+    margin-right: 20px;
+    input {
+      margin-right: 10px;
+    }
+  }
+
+  .batch-action {
+    & + .batch-action {
+      margin-left: 5px;
+    }
+    @include ellipsis();
+  }
+}
+
+.table {
+  position: relative;
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  &,
+  div {
+    @include box-sizing(border-box);
+  }
+
+  .default-no-data,
+  .default-loading {
+    text-align: center;
+    font-size: 14px;
+    line-height: 200px;
+  }
+
+  table {
+    // table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+
+    &.fix-table {
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: $white-color;
+      width: auto;
+      box-shadow: 6px 0 6px -4px rgba(0,0,0, .2);
+    }
+
+    &.flow-table {
+    }
+
+    th {
+      text-align: left;
+      line-height: 30px;
+      font-size: 14px;
+      color: #000;
+    }
+
+    tr.header {
+      td {
+        background-color: #F7F8F9;
+        line-height: 28px;
+      }
+    }
+
+    .empty-cell {
+      &,
+      & > div {
+        color: transparent !important;
+      }
+    }
+
+    > tbody {
+      td {
+        font-size: $font-size-sm;
+        text-align: left;
+        padding: 10px;
+        // @include ellipsis();
+
+        // &.wrap {
+        //   white-space: initial;
+        //   word-break: break-word;
+        // }
+      }
+
+      tr {
+        border-bottom: 1px solid $gray-color;
+      }
+    }
+
+    .row-select {
+      padding-left: 10px;
+    }
+
+    .detail-trigger-cell {
+      cursor: pointer;
+      text-align: center;
+
+      .icon-plus,
+      .icon-minus {
+        border: 1px solid $gray-color;
+        margin-top: 5px;
+      }
+    }
+
+    .detail-container {
+      padding: 0;
+    }
+
+    // tr.expanded {
+    //   .detail-trigger-cell {
+    //     .icon {
+    //       @include transform(rotate(180deg));
+    //     }
+    //   }
+    // }
+
+    td.detail-cell {
+      padding: 10px 20px;
+      background-color: #EEEEEE;
+
+      table {
+        padding: 0;
+
+        thead th{
+          font-size: 12px;
+          padding-left: 10px;
+        }
+
+        td {
+          @include ellipsis();
+        }
+      }
+    }
+
+    .detail {
+      text-align: left;
+      @include inline-block();
+      width: 50%;
+      vertical-align: top;
+
+      .detail-field {
+        line-height: 2;
+      }
+
+      label {
+        @include inline-block();
+      }
+    }
+  }
+
+  table > thead {
+    border-radius: 3px;
+
+    th {
+      line-height: 30px;
+      background-color: $table-header-background-color;
+      color: $text-color;
+      padding-left: 20px;
+      padding-right: 10px;
+
+      &:first-child {
+        border-radius:3px 0 0 3px;
+      }
+      &:last-child {
+        border-radius:0 3px 3px 0;
+      }
+
+      &.sortable {
+        cursor: pointer;
+
+        .icon-arrow-up,
+        .icon-arrow-down {
+          vertical-align: middle;
+          margin-left: 10px;
+          font-size: 18px;
+          margin-top: -3px;
+        }
+
+        @include user-select(none);
+      }
+
+      &:first-child {
+        @include border-top-left-radius($border-radius-base);
+        @include border-bottom-left-radius($border-radius-base);
+      }
+
+      &:last-child {
+        @include border-top-right-radius($border-radius-base);
+        @include border-bottom-right-radius($border-radius-base);
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      &.hover,
+      &:hover {
+        background-color: #ebf6ff !important;
+      }
+
+      transition: background-color .2s;
+    }
+    td {
+      padding-left: 20px;
+    }
+  }
+}
