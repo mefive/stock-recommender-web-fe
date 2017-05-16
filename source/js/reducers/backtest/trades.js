@@ -10,7 +10,7 @@ const initialState = {
 export default handleActions({
   [actionTypes.RUN_BACKTEST]: (state) => ({ ...state, isFetching: true }),
 
-  [actionTypes.UPDATE_TRADES]: (state, { payload }) => {
+  [actionTypes.UPDATE_BACKTEST_TRADES]: (state, { payload }) => {
     const data = [];
 
     payload.forEach((trade) => data.push({ ...trade.order, ...trade.portfolio }));

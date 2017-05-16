@@ -7,6 +7,7 @@ class Kline extends React.Component {
     return (
       <div id="kline">
         <EChart
+          style={{ height: 600 }}
           option={{
             title: {
               text: this.props.symbol,
@@ -37,9 +38,9 @@ class Kline extends React.Component {
                 end: 100
               }
             ],
-            // legend: {
-            //   data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
-            // },
+            legend: {
+              data: ['日K', 'MA5', 'MA10', 'MA30']
+            },
             xAxis: {
               type: 'category',
               data: this.props.categoryData,

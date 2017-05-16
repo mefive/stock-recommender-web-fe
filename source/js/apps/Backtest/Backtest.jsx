@@ -8,10 +8,12 @@ import Trades from './Trades';
 
 class Backtest extends React.Component {
   canShowResult() {
-    return Object.keys(this.props.kline.data).length > 0;
+    return !!this.props.result;
   }
 
   render() {
+    const { result } = this.props;
+
     return (
       <div id="backtest" style={{ paddingTop: 8 }}>
         <h1>回测</h1>
@@ -25,6 +27,22 @@ class Backtest extends React.Component {
             <ConfigForm />
           </div>
         </div>
+
+        {this.canShowResult() && (
+        <div className="card mt-3">
+          <div className="card-header">
+            运行结果
+          </div>
+          <div className="card-block">
+            <h4 className="card-title">收益</h4>
+            <p className="card-text">{`${(result.returns * 100).toFixed(2)}%`}</p>
+            <h4 className="card-title">总资产</h4>
+            <p className="card-text">{result.asset}</p>
+            <h4 className="card-title">现金</h4>
+            <p className="card-text">{result.cash}</p>
+          </div>
+        </div>
+        )}
 
         {this.canShowResult() && (
         <div className="card mt-3">
@@ -56,7 +74,7 @@ class Backtest extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  kline: state.backtest.kline,
+  result: state.backtest.result,
 });
 
 export default connect(mapStateToProps)(Backtest);

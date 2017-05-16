@@ -13,19 +13,25 @@ function* runBacktest({ payload }) {
     );
 
     yield put({
-      type: actionTypes.UPDATE_KLINE,
+      type: actionTypes.UPDATE_BACKTEST_KLINE,
       payload: {
         query: {
           symbol,
           scale,
         },
+        trades: data.trades || [],
         kline: data.kline,
       }
     });
 
     yield put({
-      type: actionTypes.UPDATE_TRADES,
+      type: actionTypes.UPDATE_BACKTEST_TRADES,
       payload: data.trades,
+    });
+
+    yield put({
+      type: actionTypes.UPDATE_BACKTEST_RESULT,
+      payload: data.portfolio,
     });
   }
   catch (e) {
