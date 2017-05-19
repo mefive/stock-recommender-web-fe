@@ -30,7 +30,7 @@ const store = createStore(
 // console.log(store);
 
 const Port = (props) => (
-  <div className="container">
+  <div className="container-fluid">
     {props.children}
   </div>
 );

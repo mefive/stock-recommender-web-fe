@@ -1,9 +1,94 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import EChart from 'echarts-for-react';
+import pureRender from 'pure-render-decorator';
 
+function getScaleText(scale) {
+  switch (+scale) {
+    case 240: {
+      return '日K';
+    }
+
+    case 1200: {
+      return '周K';
+    }
+  }
+}
+
+function getPointColor(type) {
+  switch (type) {
+    case 0: {
+      return '#54BA53';
+    }
+
+    case 1: {
+      return '#DB514A';
+    }
+
+    case 2: {
+      return '#F1AF3C';
+    }
+  }
+}
+
+@pureRender
 class Kline extends React.Component {
   render() {
+    const { kline, query, trades } = this.props;
+    console.log({ kline, query, trades });
+    const { scale, symbol } = query;
+
+    const categoryData = kline.map(i => i.day);
+
+    const series = [];
+    
+    series.push({
+      name: getScaleText(scale),
+      type: 'candlestick',
+      data: kline.map((k) => [
+        +k.open,
+        +k.close,
+        +k.low,
+        +k.high,
+      ]),
+      markPoint: {
+        data: (() => {
+          return trades.map((order) => ({
+            type: order.type,
+            price: order.price,
+            coord: [order.date, +order.price],
+            // symbolRotate: order.type === 1 ? 0 : 180,
+            itemStyle: {
+              normal: {
+                color: getPointColor(order.type)
+              }
+            }
+          }))
+        })()
+      }
+    });
+
+    series.push({
+      name: 'MA5',
+      type: 'line',
+      smooth: true,
+      data: kline.map((k) => k.maPrice5)
+    });
+
+    series.push({
+      name: 'MA10',
+      type: 'line',
+      smooth: true,
+      data: kline.map((k) => k.maPrice10)
+    });
+
+    series.push({
+      name: 'MA30',
+      type: 'line',
+      smooth: true,
+      data: kline.map((k) => k.maPrice30)
+    });
+
     return (
       <div id="kline">
         <EChart
@@ -27,7 +112,7 @@ class Kline extends React.Component {
             dataZoom: [
               {
                 type: 'inside',
-                start: 50,
+                start: 0,
                 end: 100
               },
               {
@@ -43,7 +128,7 @@ class Kline extends React.Component {
             },
             xAxis: {
               type: 'category',
-              data: this.props.categoryData,
+              data: categoryData,
               scale: true,
               boundaryGap : false,
               axisLine: {onZero: false},
@@ -58,8 +143,8 @@ class Kline extends React.Component {
                 show: true
               }
             },
-            categoryData: this.props.categoryData,
-            series: this.props.series,
+            categoryData,
+            series,
           }}
         />
       </div>
@@ -68,14 +153,14 @@ class Kline extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { kline } = state.backtest;
+  const { kline, trades, query } = state.backtest;
 
   return {
     isFetching: kline.isFetching,
-    categoryData: kline.data.categoryData,
-    series: kline.data.series,
-    symbol: kline.data.symbol,
-  }
+    query,
+    kline: kline.data,
+    trades: trades.data,
+  };
 }
 
 export default connect(mapStateToProps)(Kline);

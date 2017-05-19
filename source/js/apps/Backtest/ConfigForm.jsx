@@ -4,27 +4,28 @@ import classNames from 'classnames';
 
 import * as actionTypes from 'config/actionTypes';
 
-const defaultDataSource = {
-  symbol: 'SH600036',
-  strategy: 'MOVING_AVERAGE_CROSSOVER',
-  scale: '240',
-  datalen: 100,
-};
-
 class ConfigForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: { ...defaultDataSource },
       error: {},
+      dataSource: props.query,
     };
     this.handleChange = ::this.handleChange;
     this.clearError = ::this.clearError;
+    this.onSubmit = :: this.onSubmit;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { query } = nextProps;
+
+    if (query !== this.props.query) {
+      this.setState({ dataSource: { ...query }});
+    }
   }
 
   handleChange(e) {
     const { name, value } = e.target;
-
     this.setState({
       dataSource: {
         ...this.state.dataSource,
@@ -63,11 +64,18 @@ class ConfigForm extends React.Component {
     return Object.keys(error).length === 0;
   }
 
+  onSubmit(e) {
+    e.preventDefault();
+    if (this.validate()) {
+      this.props.run(this.state.dataSource);
+    }
+  }
+
   render() {
-    const { dataSource, error } = this.state;
+    const { error, dataSource } = this.state;
 
     return (
-      <div id="config-form">
+      <form id="config-form" onSubmit={this.onSubmit}>
         <div className="row">
           <div className="col col-12 col-xl-3">
             <div
@@ -150,26 +158,26 @@ class ConfigForm extends React.Component {
           <div className="col">
             <button
               className="btn btn-primary"
-              onClick={() => {
-                if (this.validate()) {
-                  this.props.run(dataSource);
-                }
-              }}
+              type="submit"
             >
               运行
             </button>
           </div>
         </div>
-      </div>
+      </form>
     );
   } 
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  run: data => dispatch({
-    type: actionTypes.RUN_BACKTEST,
-    payload: data,
-  }),
+const mapStateToProps = (state) => ({
+  query: state.backtest.query,
 });
 
-export default connect(null, mapDispatchToProps)(ConfigForm);
+const mapDispatchToProps = (dispatch) => ({
+  run: (data) => {
+    dispatch({ type: actionTypes.UPDATE_BACKTEST_QUERY, payload: data });
+    dispatch({ type: actionTypes.RUN_BACKTEST })
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConfigForm);

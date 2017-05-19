@@ -66,6 +66,11 @@ class Trades extends React.Component {
               }
             },
             {
+              key: 'returns',
+              title: '收益',
+              render: (reocrd) => `${(reocrd.returns * 100).toFixed(2)}%`,
+            },
+            {
               key: 'price',
               title: '成交价格',
             },
@@ -81,11 +86,6 @@ class Trades extends React.Component {
               key: 'cash',
               title: '现金',
             },
-            {
-              key: 'returns',
-              title: '收益',
-              render: (reocrd) => `${(reocrd.returns * 100).toFixed(2)}%`,
-            }
           ]}
           dataSource={this.props.trades} 
         /> 

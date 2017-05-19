@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-//import fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch';
 import formData from 'form-urlencoded';
 
 function handleResponse(promise, url, method) {

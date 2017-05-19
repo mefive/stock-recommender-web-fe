@@ -4,7 +4,9 @@ import * as actionTypes from 'config/actionTypes';
 import service from 'utils/service';
 
 function* runBacktest({ payload }) {
-  const { symbol, strategy, scale, datalen } = payload;
+  const state = yield select();
+
+  const { symbol, strategy, scale, datalen } = state.backtest.query;
 
   try {
     const data = yield service.get(
@@ -12,27 +14,22 @@ function* runBacktest({ payload }) {
       { symbol, strategy, scale, datalen },
     );
 
-    yield put({
-      type: actionTypes.UPDATE_BACKTEST_KLINE,
-      payload: {
-        query: {
-          symbol,
-          scale,
-        },
-        trades: data.trades || [],
-        kline: data.kline,
-      }
-    });
+    yield [
+      put({
+        type: actionTypes.UPDATE_BACKTEST_KLINE,
+        payload: data.kline,
+      }),
 
-    yield put({
-      type: actionTypes.UPDATE_BACKTEST_TRADES,
-      payload: data.trades,
-    });
+      put({
+        type: actionTypes.UPDATE_BACKTEST_TRADES,
+        payload: data.trades,
+      }),
 
-    yield put({
-      type: actionTypes.UPDATE_BACKTEST_RESULT,
-      payload: data.portfolio,
-    });
+      put({
+        type: actionTypes.UPDATE_BACKTEST_RESULT,
+        payload: data.portfolio,
+      }),
+    ]
   }
   catch (e) {
     console.log(e);
